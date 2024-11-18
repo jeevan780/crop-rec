@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
-
+import os
 # Example price data
 previous_month_avg_prices = {
     "Rice": 1500, "Maize": 1300, "Jute": 1800, "Cotton": 2000,
@@ -111,7 +111,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 # Main function to run the bot
 def main():
     # Replace 'YOUR_TOKEN_HERE' with your bot's API token
-    application = ApplicationBuilder().token("7650084244:AAFIRmyppsIg77qdYnqjyWd1EIhGl0xozXQ").build()
+    application = ApplicationBuilder().token(os.getenv('TELEGRAM_TOKEN')).build()
 
     # Add handlers
     application.add_handler(CommandHandler("start", start))
