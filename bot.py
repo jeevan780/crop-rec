@@ -98,34 +98,43 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Send me the name of a crop, and I'll advise whether to sell or hold it based on prices.\n"
         "I will also provide the general requirements for growing the crop."
     )
-
-# Message handler for crop evaluation
+user_context = {}
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.message.from_user.id
     user_input = update.message.text.strip().lower()
     
-    # Greetings
-    if user_input in ["hi", "hello", "hey"]:
+    # Check if the user has entered a crop name previously
+    if user_id in user_context and "crop_name" in user_context[user_id]:
+        crop_name = user_context[user_id]["crop_name"]
+
+        if user_input in ["market", "farming"]:
+            if user_input == "market":
+                response = evaluate_crop(crop_name).split("\n\n")[0]  # Extract market data
+                await update.message.reply_text(f"📈 Market Data for {crop_name}:\n{response}")
+            elif user_input == "farming":
+                response = evaluate_crop(crop_name).split("\n\n")[1]  # Extract farming insights
+                await update.message.reply_text(f"🌾 Farming Insights for {crop_name}:\n{response}")
+            
+            # Clear the context after response
+            del user_context[user_id]
+            await update.message.reply_text("🌟 Anything else I can assist you with? Type another crop name!")
+        else:
+            await update.message.reply_text(
+                "Please reply with either *Market* or *Farming* to get the relevant information!"
+            )
+        return
+    
+    # If it's a new crop query, process it
+    crop_name = user_input.capitalize()  # Normalize the input
+    if crop_name in previous_month_avg_prices:
+        user_context[user_id] = {"crop_name": crop_name}  # Store crop name in context
         await update.message.reply_text(
-            "Hi there! 🌱 I'm here to help you with crop advice.\n"
-            "Tell me the name of a crop, and I'll assist you with market prices and farming tips!"
+            f"Do you want market data or farming insights for **{crop_name}**?\n"
+            "Please reply with *Market* or *Farming*."
         )
-        return
-
-    # Gratitude Response
-    if user_input in ["thanks", "thank you"]:
-        await update.message.reply_text("You're welcome! 😊 Let me know if you have more questions.")
-        return
-
-    # User asking for a crop
-    try:
-        crop_name = user_input.capitalize()  # Normalize user input
-        response = evaluate_crop(crop_name)
-        await update.message.reply_text(response)
-        await update.message.reply_text("🌟 Is there another crop you'd like advice on? Just type the name!")
-    except Exception as e:
+    else:
         await update.message.reply_text(
-            f"Oops, I couldn't process that! 💡 Please make sure you enter a valid crop name. "
-            f"Need help? Type 'start' for instructions."
+            "I couldn't find that crop in my database. 💡 Please try another crop name."
         )
 
 
