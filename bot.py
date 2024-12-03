@@ -102,7 +102,9 @@ user_context = {}
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.message.from_user.id
     user_input = update.message.text.strip().lower()
-    
+    if user_input in ["hi", "hello"]:
+        await update.message.reply_text('Hi how may I help you today')
+        pass
     # Check if the user has entered a crop name previously
     if user_id in user_context and "crop_name" in user_context[user_id]:
         crop_name = user_context[user_id]["crop_name"]
