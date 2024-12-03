@@ -136,7 +136,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await update.message.reply_text(
             "I couldn't find that crop in my database. 💡 Please try another crop name."
         )
-
+        #hello
 
 # Main function to run the bot
 def main():
