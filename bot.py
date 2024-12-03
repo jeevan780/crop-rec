@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 import os
-import gtts
+from gtts import gTTS
 import io
 # Example price data
 previous_month_avg_prices = {
@@ -95,18 +95,20 @@ def evaluate_crop(crop_name):
 
 # Command handler for /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    # await update.message.reply_text(
-    #     "Welcome to the AgriVision Bot!\n"
-    #     "Send me the name of a crop, and I'll advise whether to sell or hold it based on prices.\n"
-    #     "I will also provide the general requirements for growing the crop."
-    # )
-    message='welcome to agri vision bot'
-    tts=gtts(text=message,lang='en')
-    audio_buffer=io.BytesIO()
+    message = "Welcome to the AgriVision Bot! Send me the name of a crop, and I'll advise whether to sell or hold it based on prices. I will also provide the general requirements for growing the crop."
+
+    # Generate speech from text
+    tts = gTTS(text=message, lang='en')
+    audio_buffer = io.BytesIO()
     tts.write_to_fp(audio_buffer)
     audio_buffer.seek(0)
-    await context.bot.send_voice( 
-        chat_id=update.message.chat_id, voice=audio_buffer, caption=message )
+
+    # Send voice message
+    await context.bot.send_voice(
+        chat_id=update.effective_chat.id,
+        voice=audio_buffer,
+        caption=message
+    )
 user_context = {}
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.message.from_user.id
