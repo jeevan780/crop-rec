@@ -98,7 +98,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message = "Welcome to the AgriVision Bot! Send me the name of a crop, and I'll advise whether to sell or hold it based on prices. I will also provide the general requirements for growing the crop."
 
     # Generate speech from text
-    tts = gTTS(text=message, lang='en')
+    tts = gTTS(text=message, lang='kn')
     audio_buffer = io.BytesIO()
     tts.write_to_fp(audio_buffer)
     audio_buffer.seek(0)
