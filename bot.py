@@ -95,7 +95,7 @@ def evaluate_crop(crop_name):
 
 # Command handler for /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    message = "Welcome to the AgriVision Bot! Send me the name of a crop, and I'll advise whether to sell or hold it based on prices. I will also provide the general requirements for growing the crop."
+    message = "ಅಗ್ರಿವಿಷನ್ ಬಾಟ್‌ಗೆ ಸ್ವಾಗತ! ಬೆಳೆ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ, ಬೆಲೆ ಆಧಾರಿತ ಸಲಹೆ ಪಡೆಯಿರಿ."
 
     # Generate speech from text
     tts = gTTS(text=message, lang='kn')
