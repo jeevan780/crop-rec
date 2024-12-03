@@ -101,12 +101,33 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Message handler for crop evaluation
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_input = update.message.text.strip().lower()
+    
+    # Greetings
+    if user_input in ["hi", "hello", "hey"]:
+        await update.message.reply_text(
+            "Hi there! 🌱 I'm here to help you with crop advice.\n"
+            "Tell me the name of a crop, and I'll assist you with market prices and farming tips!"
+        )
+        return
+
+    # Gratitude Response
+    if user_input in ["thanks", "thank you"]:
+        await update.message.reply_text("You're welcome! 😊 Let me know if you have more questions.")
+        return
+
+    # User asking for a crop
     try:
-        user_input = update.message.text.strip()  # Get the crop name from user input
-        response = evaluate_crop(user_input)  # Evaluate the crop price and details
-        await update.message.reply_text(response)  # Send the response to the user
+        crop_name = user_input.capitalize()  # Normalize user input
+        response = evaluate_crop(crop_name)
+        await update.message.reply_text(response)
+        await update.message.reply_text("🌟 Is there another crop you'd like advice on? Just type the name!")
     except Exception as e:
-        await update.message.reply_text(f"Error: {str(e)}. Please try again.")
+        await update.message.reply_text(
+            f"Oops, I couldn't process that! 💡 Please make sure you enter a valid crop name. "
+            f"Need help? Type 'start' for instructions."
+        )
+
 
 # Main function to run the bot
 def main():
