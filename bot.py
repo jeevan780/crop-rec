@@ -95,7 +95,7 @@ def evaluate_crop(crop_name):
 
 # Command handler for /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    message = "ಅಗ್ರಿವಿಷನ್ ಬಾಟ್‌ಗೆ ಸ್ವಾಗತ! ಬೆಳೆ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ, ಬೆಲೆ ಆಧಾರಿತ ಸಲಹೆ ಪಡೆಯಿರಿ."
+    message = "ಅಗ್ರಿವಿಷನ್ ಸ್ವಾಗತ! ಬೆಳೆ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ, ಬೆಲೆ ಆಧಾರಿತ ಸಲಹೆ ಪಡೆಯಿರಿ."
 
     # Generate speech from text
     tts = gTTS(text=message, lang='kn')
@@ -142,8 +142,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if crop_name in previous_month_avg_prices:
         user_context[user_id] = {"crop_name": crop_name}  # Store crop name in context
         await update.message.reply_text(
-            f"Do you want market data or farming insights for **{crop_name}**?\n"
-            "Please reply with *Market* or *Farming*."
+            f"Do you want market data or farming insights for {crop_name}?\n"
+            "Please reply with Market or Farming."
         )
     else:
         await update.message.reply_text(
