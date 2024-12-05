@@ -1,8 +1,9 @@
-from telegram import Update
+from telegram import Update 
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 import os
 from gtts import gTTS
 import io
+
 # Example price data
 previous_month_avg_prices = {
     "Rice": 1500, "Maize": 1300, "Jute": 1800, "Cotton": 2000,
