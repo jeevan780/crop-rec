@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 from gtts import gTTS
 import io
+import os
 
 # Load data and models
 csv_file_path = 'Crop_recommendation_with_price_data1.csv'
@@ -136,8 +137,8 @@ async def crop_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Main function to set up the bot
 def main():
     # Replace 'YOUR_TELEGRAM_BOT_TOKEN' with your bot's API token
-    bot_token = "7650084244:AAHOnPMOOPNSEt_SrSVkMo7i-8qO8zUZ6lU"
-    application = ApplicationBuilder().token(bot_token).build()
+    
+    application = ApplicationBuilder().token(os.getenv('TELEGRAM_TOKEN')).build()
     
     # Add handlers
     application.add_handler(CommandHandler("start", start))
