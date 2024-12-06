@@ -138,7 +138,10 @@ async def crop_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     # Replace 'YOUR_TELEGRAM_BOT_TOKEN' with your bot's API token
     
-    application = ApplicationBuilder().token(os.getenv('TELEGRAM_TOKEN')).build()
+    bot_token = os.getenv('TELEGRAM_TOKEN')
+    if not bot_token:
+        raise ValueError("Bot token not found. Please set the TELEGRAM_TOKEN environment variable.")
+    application = ApplicationBuilder().token(bot_token).build()
     
     # Add handlers
     application.add_handler(CommandHandler("start", start))
