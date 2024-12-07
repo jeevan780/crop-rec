@@ -7,6 +7,7 @@ from gtts import gTTS
 import io
 import os
 
+
 # Load data and models
 csv_file_path = 'Crop_recommendation_with_price_data1.csv'
 model_file_path = 'Crop_Recommendation_Model.pkl'
